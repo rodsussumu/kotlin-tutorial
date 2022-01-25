@@ -4,6 +4,8 @@ import com.rodrigofirstapp.controller.request.PostBookRequest
 import com.rodrigofirstapp.controller.request.PostCustomerRequest
 import com.rodrigofirstapp.controller.request.PutBookRequest
 import com.rodrigofirstapp.controller.request.PutCustomerRequest
+import com.rodrigofirstapp.controller.response.BookResponse
+import com.rodrigofirstapp.controller.response.CustomerResponse
 import com.rodrigofirstapp.enums.BookStatus
 import com.rodrigofirstapp.enums.CustomerStatus
 import com.rodrigofirstapp.model.BookModel
@@ -38,5 +40,24 @@ fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel {
         price = this.price ?: previousValue.price,
         status = previousValue.status,
         customer = previousValue.customer
+    )
+}
+
+fun CustomerModel.toResponse(): CustomerResponse {
+    return CustomerResponse(
+        id = this.id,
+        name = this.name,
+        email = this.name,
+        status = this.status
+    )
+}
+
+fun BookModel.toResponse(): BookResponse {
+    return BookResponse(
+        id = this.id,
+        name = this.name,
+        price = this.price,
+        customer = this.customer,
+        status = this.status
     )
 }

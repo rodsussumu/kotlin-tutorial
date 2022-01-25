@@ -2,7 +2,9 @@ package com.rodrigofirstapp.controller
 
 import com.rodrigofirstapp.controller.request.PostBookRequest
 import com.rodrigofirstapp.controller.request.PutBookRequest
+import com.rodrigofirstapp.controller.response.BookResponse
 import com.rodrigofirstapp.extension.toBookModel
+import com.rodrigofirstapp.extension.toResponse
 import com.rodrigofirstapp.model.BookModel
 import com.rodrigofirstapp.service.BookService
 import com.rodrigofirstapp.service.CustomerService
@@ -24,8 +26,8 @@ class BookController (
     }
 
     @GetMapping
-    fun getAll(): List<BookModel> {
-        return bookService.findAll()
+    fun getAll(): List<BookResponse> {
+        return bookService.findAll().map { it.toResponse() }
     }
 
     @GetMapping("/active")
@@ -34,8 +36,8 @@ class BookController (
     }
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Int): BookModel {
-        return bookService.findById(id)
+    fun getById(@PathVariable id: Int): BookResponse {
+        return bookService.findById(id).toResponse()
     }
 
     @DeleteMapping("/{id}")
