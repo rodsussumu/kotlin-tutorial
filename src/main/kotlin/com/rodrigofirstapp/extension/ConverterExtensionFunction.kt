@@ -5,15 +5,21 @@ import com.rodrigofirstapp.controller.request.PostCustomerRequest
 import com.rodrigofirstapp.controller.request.PutBookRequest
 import com.rodrigofirstapp.controller.request.PutCustomerRequest
 import com.rodrigofirstapp.enums.BookStatus
+import com.rodrigofirstapp.enums.CustomerStatus
 import com.rodrigofirstapp.model.BookModel
 import com.rodrigofirstapp.model.CustomerModel
 
 fun PostCustomerRequest.toCustomerModel(): CustomerModel {
-    return CustomerModel(name = this.name, email = this.email);
+    return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ATIVO);
 }
 
-fun PutCustomerRequest.toCustomerModel(id: Int): CustomerModel {
-    return CustomerModel(id=id, name = this.name, email = this.email);
+fun PutCustomerRequest.toCustomerModel(previousValue: CustomerModel): CustomerModel {
+    return CustomerModel(
+        id= previousValue.id,
+        name = this.name ?: previousValue.name,
+        email = this.email ?: previousValue.email,
+        status = previousValue.status
+    );
 }
 
 fun PostBookRequest.toBookModel(customer: CustomerModel): BookModel {

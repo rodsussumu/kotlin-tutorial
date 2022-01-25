@@ -2,6 +2,7 @@ package com.rodrigofirstapp.service
 
 import com.rodrigofirstapp.enums.BookStatus
 import com.rodrigofirstapp.model.BookModel
+import com.rodrigofirstapp.model.CustomerModel
 import com.rodrigofirstapp.repository.BookRepository
 import org.springframework.stereotype.Service
 
@@ -35,6 +36,14 @@ class BookService(
 
     fun update(book: BookModel) {
         bookRepository.save(book)
+    }
+
+    fun deleteByCustomer(customer: CustomerModel) {
+        val books = bookRepository.findByCustomer(customer)
+        for(book in books) {
+            book.status = BookStatus.DELETADO
+        }
+        bookRepository.saveAll(books)
     }
 
 }
