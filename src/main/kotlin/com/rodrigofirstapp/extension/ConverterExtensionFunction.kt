@@ -2,6 +2,7 @@ package com.rodrigofirstapp.extension
 
 import com.rodrigofirstapp.controller.request.PostBookRequest
 import com.rodrigofirstapp.controller.request.PostCustomerRequest
+import com.rodrigofirstapp.controller.request.PutBookRequest
 import com.rodrigofirstapp.controller.request.PutCustomerRequest
 import com.rodrigofirstapp.enums.BookStatus
 import com.rodrigofirstapp.model.BookModel
@@ -21,5 +22,15 @@ fun PostBookRequest.toBookModel(customer: CustomerModel): BookModel {
         price = this.price,
         status = BookStatus.ATIVO,
         customer = customer
+    )
+}
+
+fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel {
+    return BookModel(
+        id = previousValue.id,
+        name = this.name ?: previousValue.name,
+        price = this.price ?: previousValue.price,
+        status = previousValue.status,
+        customer = previousValue.customer
     )
 }
