@@ -4,6 +4,8 @@ import com.rodrigofirstapp.enums.BookStatus
 import com.rodrigofirstapp.model.BookModel
 import com.rodrigofirstapp.model.CustomerModel
 import com.rodrigofirstapp.repository.BookRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -14,12 +16,12 @@ class BookService(
         bookRepository.save((book))
     }
 
-    fun findAll(): List<BookModel> {
-        return bookRepository.findAll().toList()
+    fun findAll(pageable: Pageable): Page<BookModel> {
+        return bookRepository.findAll(pageable)
     }
 
-    fun findActivies(): List<BookModel> {
-        return bookRepository.findByStatus(BookStatus.ATIVO)
+    fun findActivies(pageable: Pageable): Page<BookModel> {
+        return bookRepository.findByStatus(BookStatus.ATIVO, pageable)
     }
 
     fun findById(id: Int): BookModel {
