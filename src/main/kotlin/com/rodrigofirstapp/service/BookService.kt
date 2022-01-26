@@ -1,6 +1,8 @@
 package com.rodrigofirstapp.service
 
 import com.rodrigofirstapp.enums.BookStatus
+import com.rodrigofirstapp.enums.Errors
+import com.rodrigofirstapp.exception.NotFoundException
 import com.rodrigofirstapp.model.BookModel
 import com.rodrigofirstapp.model.CustomerModel
 import com.rodrigofirstapp.repository.BookRepository
@@ -25,7 +27,7 @@ class BookService(
     }
 
     fun findById(id: Int): BookModel {
-        return bookRepository.findById(id).orElseThrow()
+        return bookRepository.findById(id).orElseThrow{ NotFoundException(Errors.ML101.message.format(id), Errors.ML101.code) }
     }
 
     fun delete(id: Int) {

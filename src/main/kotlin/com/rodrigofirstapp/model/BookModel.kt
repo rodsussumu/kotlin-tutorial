@@ -1,6 +1,8 @@
 package com.rodrigofirstapp.model
 
 import com.rodrigofirstapp.enums.BookStatus
+import com.rodrigofirstapp.enums.Errors
+import com.rodrigofirstapp.exception.BadRequestException
 import java.lang.Exception
 import java.math.BigDecimal
 import javax.persistence.*
@@ -26,7 +28,7 @@ data class BookModel (
     var status: BookStatus? = null
         set(value) {
             if(field == BookStatus.DELETADO || field == BookStatus.CANCELADO) {
-                throw Exception("Não é possivel alterar um livro com status ${field}")
+                throw BadRequestException(Errors.ML102.message.format(field), Errors.ML102.code)
             }
             field = value
         }

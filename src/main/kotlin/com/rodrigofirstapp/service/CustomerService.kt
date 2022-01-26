@@ -1,6 +1,8 @@
 package com.rodrigofirstapp.service
 
 import com.rodrigofirstapp.enums.CustomerStatus
+import com.rodrigofirstapp.enums.Errors
+import com.rodrigofirstapp.exception.NotFoundException
 import com.rodrigofirstapp.model.CustomerModel
 import com.rodrigofirstapp.repository.CustomerRepository
 import org.springframework.stereotype.Service
@@ -24,7 +26,7 @@ class CustomerService(
     }
 
     fun findById(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow()
+        return customerRepository.findById(id).orElseThrow{ NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code) }
     }
 
     fun update(customer: CustomerModel) {
