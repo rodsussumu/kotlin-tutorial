@@ -25,7 +25,9 @@ dependencies {
 	implementation("org.flywaydb:flyway-core:8.4.2")
 	implementation("org.flywaydb:flyway-mysql:8.2.1")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+
 	runtimeOnly("mysql:mysql-connector-java:8.0.12")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
