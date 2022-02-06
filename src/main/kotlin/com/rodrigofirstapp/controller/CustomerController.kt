@@ -5,8 +5,10 @@ import com.rodrigofirstapp.controller.request.PutCustomerRequest
 import com.rodrigofirstapp.controller.response.CustomerResponse
 import com.rodrigofirstapp.extension.toCustomerModel
 import com.rodrigofirstapp.extension.toResponse
+import com.rodrigofirstapp.security.UsersCanOnlyAcessTheirOwnResource
 import com.rodrigofirstapp.service.CustomerService
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -28,6 +30,7 @@ class CustomerController(
     }
 
     @GetMapping("/{id}")
+    @UsersCanOnlyAcessTheirOwnResource
     fun getCustomer(@PathVariable id: Int): CustomerResponse {
         return customerService.findById(id).toResponse()
     }
