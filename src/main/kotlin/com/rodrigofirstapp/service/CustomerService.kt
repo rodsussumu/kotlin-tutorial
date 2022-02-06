@@ -2,16 +2,19 @@ package com.rodrigofirstapp.service
 
 import com.rodrigofirstapp.enums.CustomerStatus
 import com.rodrigofirstapp.enums.Errors
+import com.rodrigofirstapp.enums.Role
 import com.rodrigofirstapp.exception.NotFoundException
 import com.rodrigofirstapp.model.CustomerModel
 import com.rodrigofirstapp.repository.CustomerRepository
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.lang.Exception
 
 @Service
 class CustomerService(
     val customerRepository: CustomerRepository,
-    val bookService: BookService
+    val bookService: BookService,
+    private val bCrypt: BCryptPasswordEncoder
 ) {
 
     fun getAll(name: String?): List<CustomerModel> {
@@ -22,7 +25,12 @@ class CustomerService(
     }
 
     fun create(customer: CustomerModel) {
-        customerRepository.save(customer)
+        val customerCopy = customer.copy(
+            roles = setOf(Role.CUSTOMER),
+            password = bCrypt.encode(customer.password)
+        )
+        println(customer)
+        customerRepository.save(customerCopy)
     }
 
     fun findById(id: Int): CustomerModel {
