@@ -6,10 +6,12 @@ import com.rodrigofirstapp.controller.request.PutBookRequest
 import com.rodrigofirstapp.controller.request.PutCustomerRequest
 import com.rodrigofirstapp.controller.response.BookResponse
 import com.rodrigofirstapp.controller.response.CustomerResponse
+import com.rodrigofirstapp.controller.response.PageResponse
 import com.rodrigofirstapp.enums.BookStatus
 import com.rodrigofirstapp.enums.CustomerStatus
 import com.rodrigofirstapp.model.BookModel
 import com.rodrigofirstapp.model.CustomerModel
+import org.springframework.data.domain.Page
 
 fun PostCustomerRequest.toCustomerModel(): CustomerModel {
     return CustomerModel(
@@ -65,5 +67,14 @@ fun BookModel.toResponse(): BookResponse {
         price = this.price,
         customer = this.customer,
         status = this.status
+    )
+}
+
+fun <T> Page<T>.toPageResponse(): PageResponse<T> {
+    return PageResponse(
+        this.content,
+        this.number,
+        this.totalElements,
+        this.totalPages
     )
 }

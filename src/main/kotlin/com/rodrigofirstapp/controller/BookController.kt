@@ -3,7 +3,9 @@ package com.rodrigofirstapp.controller
 import com.rodrigofirstapp.controller.request.PostBookRequest
 import com.rodrigofirstapp.controller.request.PutBookRequest
 import com.rodrigofirstapp.controller.response.BookResponse
+import com.rodrigofirstapp.controller.response.PageResponse
 import com.rodrigofirstapp.extension.toBookModel
+import com.rodrigofirstapp.extension.toPageResponse
 import com.rodrigofirstapp.extension.toResponse
 import com.rodrigofirstapp.model.BookModel
 import com.rodrigofirstapp.service.BookService
@@ -16,10 +18,10 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("book")
+@RequestMapping("books")
 class BookController (
-    val customerService: CustomerService,
-    val bookService: BookService
+    private val customerService: CustomerService,
+    private val bookService: BookService
         ){
 
     @PostMapping
@@ -30,8 +32,8 @@ class BookController (
     }
 
     @GetMapping
-    fun getAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> {
-        return bookService.findAll(pageable).map { it.toResponse() }
+    fun getAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<BookResponse> {
+        return bookService.findAll(pageable).map { it.toResponse() }.toPageResponse()
     }
 
     @GetMapping("/active")
